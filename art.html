@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Art Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#121212;--surface:#1e1e1e;--gold:#ffc528;--white:#fff;--black:#000;
+      --media-max:320px; /* max dimension for art media */
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Nunito",sans-serif;background:var(--bg);color:var(--white);line-height:1.6;animation:fadeIn .8s ease-out both;}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    a{color:inherit;text-decoration:none;}
+
+    /* Side nav */
+    #side-nav{position:fixed;top:1.5rem;left:1rem;display:flex;flex-direction:column;gap:.5rem;z-index:2000;}
+    .nav-btn{display:block;width:140px;padding:.6rem 1rem;border-radius:10px;background:var(--surface);color:var(--white);font-weight:600;text-align:center;transition:background .3s,color .3s;}
+    .nav-btn:hover{background:var(--gold);color:var(--black);} 
+    .nav-btn.active{background:var(--gold);color:var(--black);}  
+
+    /* Sections */
+    .section{padding:3.5rem 1rem 3rem;max-width:1100px;margin:auto;text-align:center;}
+    .section-title{font-size:1.9rem;font-weight:600;color:var(--gold);margin:0 auto 2rem;}
+
+    /* Masonry layout via CSS columns */
+    .gallery{column-width:var(--media-max);column-gap:1.5rem;}
+    .art-card{display:inline-block;width:100%;margin:0 0 1.5rem;background:var(--surface);border-radius:14px;padding:10px;position:relative;transition:transform .3s;break-inside:avoid;text-align:center;}
+    .art-card:hover{transform:translateY(-6px) scale(1.03);}  
+    .art-card::after{content:"";position:absolute;inset:0;border:2px solid var(--gold);border-radius:14px;opacity:0;transition:opacity .3s;pointer-events:none;}
+    .art-card:hover::after{opacity:1;}
+
+    .art-media{max-width:100%;max-height:var(--media-max);width:auto;height:auto;display:block;margin:auto;border-radius:8px;object-fit:contain;}
+    .art-note{font-size:.75rem;color:#bdbdbd;margin-top:.4rem;text-align:center;max-width:100%;}
+
+    /* Fullscreen viewer */
+    #viewer{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;z-index:3000;}
+    #viewer.open{opacity:1;pointer-events:auto;}
+    #viewer img,#viewer video{max-width:90vw;max-height:90vh;border-radius:10px;}
+    #viewer video{outline:none;}
+
+    footer{padding:1.5rem 0;text-align:center;font-size:.9rem;color:#777;}
+  </style>
+</head>
+<body>
+  <nav id="side-nav"></nav>
+
+  <main id="app"></main>
+  <div id="viewer"></div>
+
+  <footer>© altskop</footer>
+
+  <script>
+    /* ---------------- Nav ---------------- */
+    const pages=[{id:'emotes',label:'Emotes',href:'index.html'},{id:'art',label:'Art',href:'art.html'}];
+    const current='art';
+    const sideNav=document.getElementById('side-nav');pages.forEach(p=>{const a=document.createElement('a');a.href=p.href;a.textContent=p.label;a.className='nav-btn'+(p.id==='art'?' active':'');sideNav.appendChild(a);});
+
+    /* ------------- Art data -------------- */
+    const artworks=[
+    {'src': 'art/vac_bday2025.png', 'note': 'Vacu0usly (2025)'}, 
+    {'src': 'art/MAIN_COMP_6_1.gif', 'note': 'Vacu0usly kidnaps you (2024)'}, 
+    {'src': 'art/vacBday2024.mp4', 'note': 'Vacu0usly (2024)', 'video': true}, 
+    {'src': 'art/vacmovie1.mp4', 'note': 'Vacu0usly date (2024)', 'video': true}, 
+    {'src': 'art/main.mp4', 'note': 'Vacu0usly birthday (2023)', 'video': true}, 
+    {'src': 'art/PRODUCTION_2.mp4', 'note': 'Production materials', 'video': true}, 
+    {'src': 'art/sholzdance.mp4', 'note': 'Sholzi Pokemon-dance (2024)', 'video': true}, 
+    {'src': 'art/rem2023_final2.png', 'note': 'Rem (2023)'}, 
+    {'src': 'art/vacbdayTimelapse_1.mp4', 'note': 'Timelapse process', 'video': true}, 
+    {'src': 'art/vac_bday2025_progress.mp4', 'note': 'Timelapse process', 'video': true}, 
+    {'src': 'art/watson&gura_final.jpg', 'note': 'Watson & Gura go skydiving (2021)'}, 
+    {'src': 'art/watson_bangalore_Xsm.jpg', 'note': 'Watson cosplaying Bangalore (2021)'},
+    {'src': 'art/megu.png', 'note': 'Megumin (2021)'},
+    ];
+
+    /* -------- Build page -------- */
+    const app=document.getElementById('app');
+    const section=document.createElement('section');section.className='section';
+    section.innerHTML='<h2 class="section-title">Art Gallery</h2>';
+    const gallery=document.createElement('div');gallery.className='gallery';
+
+    /* viewer overlay */
+    const viewer=document.getElementById('viewer');
+    const openViewer=elem=>{viewer.innerHTML='';viewer.appendChild(elem);viewer.classList.add('open');};
+    viewer.addEventListener('click',e=>{if(e.target===viewer){viewer.classList.remove('open');viewer.innerHTML='';}});
+
+    artworks.forEach(a=>{
+      const card=document.createElement('div');card.className='art-card';
+      let media;const ext=a.src.split('.').pop().toLowerCase();
+      if(ext==='mp4'||a.video){media=document.createElement('video');media.src=a.src;media.autoplay=true;media.loop=true;media.muted=true;media.playsInline=true;}
+      else{media=document.createElement('img');media.src=a.src;media.alt='Artwork';}
+      media.className='art-media';card.appendChild(media);
+      if(a.note){const n=document.createElement('span');n.className='art-note';n.textContent=a.note;card.appendChild(n);} 
+      card.addEventListener('click',()=>{
+        const clone=media.cloneNode(true);
+        if(clone.tagName==='VIDEO'){clone.controls=true;clone.currentTime=0;}
+        openViewer(clone);
+      });
+      gallery.appendChild(card);
+    });
+    section.appendChild(gallery);app.appendChild(section);
+  </script>
+</body>
+</html>
