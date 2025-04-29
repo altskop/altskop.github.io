@@ -1,83 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>altskop.github.io</title>
+  <title>Alt Emotes</title>
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      /* Theme palette */
-      --bg: #121212;
-      --surface: #1e1e1e;
-      --gold: #ffc528;
-      --white: #ffffff;
-      --black: #000000;
-      /* Emote sizing */
-      --emote-h: 112px;
-      --emote-box: calc(var(--emote-h) + 16px); /* image + padding */
-    }
-
-    /* Reset & base */
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{
-      font-family:"Nunito",sans-serif;
-      background:var(--bg);
-      color:var(--white);
-      line-height:1.6;
-      animation:fadeIn 0.8s ease-out both;
-    }
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-    a{color:inherit;text-decoration:none;}
-
-    /* Floating side navigation (anchored to top-left) */
-    #side-nav{
-      position:fixed;top:1.5rem;left:1rem;
-      display:flex;flex-direction:column;gap:.5rem;z-index:2000;
-    }
-    .nav-btn{
-      display:block;width:140px;padding:.6rem 1rem;border-radius:10px;
-      background:var(--surface);color:var(--white);font-weight:600;text-align:center;
-      transition:background .3s,color .3s;
-    }
-    .nav-btn:hover{background:var(--gold);color:var(--black);} 
-    .nav-btn.active{background:var(--gold);color:var(--black);}  
-
-    /* Sections */
-    .section{padding:3.5rem 1rem 3rem;max-width:1100px;margin:auto;text-align:center;}
-    .section-title{
-      font-size:1.9rem;font-weight:600;color:var(--gold);
-      margin:0 auto 1.25rem;
-      display:inline-flex;align-items:center;gap:.6rem;
-    }
-    .twitch-link{display:inline-flex;align-items:center;}
-    .twitch-icon{width:26px;height:26px;filter:grayscale(1) brightness(2);transition:transform .25s;}
-    .twitch-link:hover .twitch-icon{transform:scale(1.2);}
-
-    /* Divider between people */
-    .divider{height:1px;background:var(--gold);margin:2.5rem auto;width:0;opacity:0;
-      animation:dividerReveal 0.5s cubic-bezier(0.6,-0.28,0.735,0.045) forwards;}
-    @keyframes dividerReveal{to{width:60%;opacity:1;}}
-
-    /* Gallery – flex so items size to content */
-    .gallery{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;}
-    .emote{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-      background:var(--surface);padding:8px;border-radius:14px;transition:transform .3s;
-      animation:zoomIn 0.6s ease both;position:relative;min-width:var(--emote-h);} 
-    @keyframes zoomIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-    .emote img{height:var(--emote-h);width:auto;display:block;}
-    .emote::after{content:"";position:absolute;inset:0;border:2px solid var(--gold);border-radius:14px;opacity:0;transition:opacity .3s;}
-    .emote:hover{transform:translateY(-6px) scale(1.05);}  
-    .emote:hover::after{opacity:1;}
-
-    .emote-note{font-size:.7rem;color:#bdbdbd;text-align:center;max-width:100%;margin-top:.35rem;line-height:1.3;}
-
-    /* Footer */
-    footer{padding:1.5rem 0;text-align:center;font-size:.9rem;color:#777;}
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <!-- Floating navigation -->
   <nav id="side-nav"></nav>
@@ -88,94 +20,7 @@
     © altskop
   </footer>
 
-  <script>
-    /* ------------------ NAVIGATION ------------------ */
-    const pages = [
-      { id:'emotes', label:'Emotes', href:'index.html' },
-      { id:'art',    label:'Art',    href:'art.html'   }
-    ];
-    const current = window.location.pathname.toLowerCase().includes('art') ? 'art' : 'emotes';
-    const sideNav = document.getElementById('side-nav');
-    pages.forEach(p => {
-      const a = document.createElement('a');
-      a.className = 'nav-btn' + (p.id===current ? ' active' : '');
-      a.href = p.href;
-      a.textContent = p.label;
-      sideNav.appendChild(a);
-    });
-    /*
-      =========================
-      Editable content section
-      =========================
-      Each person entry:
-        name   : Display name
-        twitch : Twitch channel username (omit https://twitch.tv/)
-        emotes : [ { src, note? } ]
-    */
-    const people = [
-    {'name': 'Vacu0usly', 'twitch': 'vacu0usly', 'emotes': [{'src': 'assets/vac/angry.gif'}, {'src': 'assets/vac/bleh.png'}, {'src': 'assets/vac/giggle.gif'}, {'src': 'assets/vac/heart5.png'}, {'src': 'assets/vac/nod.gif'}, {'src': 'assets/vac/pout.png'}, {'src': 'assets/vac/shock_lines.png'}, {'src': 'assets/vac/vacAyayaSmile_1_128.gif'}, {'src': 'assets/vac/vacKiss_twitch.gif'}, {'src': 'assets/vac/vacPat_twitch.gif'}, {'src': 'assets/vac/vacTalk_60frames_twitch.gif'}, {'src': 'assets/vac/vacu0uBites_256px.gif'}, {'src': 'assets/vac/vacu0uPanic_v1.gif'}, {'src': 'assets/vac/vacu0uSussy_256px.gif'}, {'src': 'assets/vac/vacu0uTalk_v1.gif', 'note': "Original by UYU, I only animated it"}, {'src': 'assets/vac/vacWave_60frames_twitch.gif'}, {'src': 'assets/vac/wave120.gif', 'note': "Original by UYU, I only animated it"}, {'src': 'assets/vac/wokege3.png'}]},
-    {'name': 'DreamyDiglett', 'twitch': 'dreamydiglett', 'emotes': [{'src': 'assets/dreamydiglett/dreamyFine_256px.gif'}, {'src': 'assets/dreamydiglett/dreamyFlustered_128px.gif'}, {'src': 'assets/dreamydiglett/dreamyGiggle_256px.gif'}, {'src': 'assets/dreamydiglett/dreamyNodders_112px.gif'}, {'src': 'assets/dreamydiglett/dreamyNotes_112px.gif'}, {'src': 'assets/dreamydiglett/dreamyShake_112px.gif'}, {'src': 'assets/dreamydiglett/dreamyTap_112px.gif'}, {'src': 'assets/dreamydiglett/dreamyWave_112px.gif'}]}, 
-
-    {'name': 'Sholzi', 'twitch': 'sholzi', 'emotes': [{'src': 'assets/sholzi/drink.png'}, {'src': 'assets/sholzi/hamhamham_slow.gif'}, {'src': 'assets/sholzi/parasocial.png'}, {'src': 'assets/sholzi/sholziSpinSpin_no_outline.gif'}, {'src': 'assets/sholzi/sholziTalk_FullFrames.gif'}, {'src': 'assets/sholzi/teehee.png'}, {'src': 'assets/sholzi/yaayzi_256px.gif'}]}, 
-    ];
-
-    /* Helper to slugify names for IDs */
-    const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-
-    const app = document.getElementById('app');
-
-    people.forEach((p, idx) => {
-      // ---- Section wrapper
-      const section = document.createElement('section');
-      section.className = 'section';
-      section.id = slug(p.name);
-
-      // ---- Title with Twitch link
-      const h2 = document.createElement('h2');
-      h2.className = 'section-title';
-      h2.innerText = p.name + ' ';
-      const link = document.createElement('a');
-      link.href = `https://twitch.tv/${p.twitch}`;
-      link.target = '_blank';
-      link.className = 'twitch-link';
-      link.setAttribute('aria-label', `${p.name} on Twitch`);
-      const icon = document.createElement('img');
-      icon.src = 'assets/twitch.webp';
-      icon.alt = '';
-      icon.className = 'twitch-icon';
-      link.appendChild(icon);
-      h2.appendChild(link);
-      section.appendChild(h2);
-
-      // ---- Gallery grid
-      const gallery = document.createElement('div');
-      gallery.className = 'gallery';
-      p.emotes.forEach(e => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'emote';
-        const img = document.createElement('img');
-        img.src = e.src;
-        img.alt = `${p.name} – Emote`;
-        wrapper.appendChild(img);
-        if(e.note){
-          const span = document.createElement('span');
-          span.className = 'emote-note';
-          span.textContent = `(${e.note})`;
-          wrapper.appendChild(span);
-        }
-        gallery.appendChild(wrapper);
-      });
-      section.appendChild(gallery);
-
-      app.appendChild(section);
-
-      // ---- Divider (except after last)
-      if(idx !== people.length - 1){
-        const div = document.createElement('div');
-        div.className = 'divider';
-        app.appendChild(div);
-      }
-    });
-  </script>
+  <script src="emotes.js"></script>
 </body>
+
 </html>
