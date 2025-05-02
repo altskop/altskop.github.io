@@ -1,7 +1,7 @@
-/* ---------------- Nav ---------------- */
-const pages = [{ id: 'emotes', label: 'Emotes', href: 'index.html' }, { id: 'art', label: 'Art', href: 'art.html' }];
-const current = 'art';
-const sideNav = document.getElementById('side-nav'); pages.forEach(p => { const a = document.createElement('a'); a.href = p.href; a.textContent = p.label; a.className = 'nav-btn' + (p.id === 'art' ? ' active' : ''); sideNav.appendChild(a); });
+// /* ---------------- Nav ---------------- */
+// const pages = [{ id: 'emotes', label: 'Emotes', href: 'index.html' }, { id: 'art', label: 'Art', href: 'art.html' }];
+// const current = 'art';
+// const sideNav = document.getElementById('side-nav'); pages.forEach(p => { const a = document.createElement('a'); a.href = p.href; a.textContent = p.label; a.className = 'nav-btn' + (p.id === 'art' ? ' active' : ''); sideNav.appendChild(a); });
 
 /* ------------- Art data -------------- */
 const artworks = [

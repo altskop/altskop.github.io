@@ -1,17 +1,18 @@
-/* ------------------ NAVIGATION ------------------ */
-const pages = [
-    { id: 'emotes', label: 'Emotes', href: 'index.html' },
-    { id: 'art', label: 'Art', href: 'art.html' }
-];
-const current = window.location.pathname.toLowerCase().includes('art') ? 'art' : 'emotes';
-const sideNav = document.getElementById('side-nav');
-pages.forEach(p => {
-    const a = document.createElement('a');
-    a.className = 'nav-btn' + (p.id === current ? ' active' : '');
-    a.href = p.href;
-    a.textContent = p.label;
-    sideNav.appendChild(a);
-});
+// /* ------------------ NAVIGATION ------------------ */
+// const pages = [
+//     { id: 'emotes', label: 'Emotes', href: 'index.html' },
+//     { id: 'art', label: 'Art', href: 'art.html' },
+//     { id: 'twitch', label: 'Twitch', href: 'https://twitch.tv/altskop' },
+// ];
+// const current = window.location.pathname.toLowerCase().includes('art') ? 'art' : 'emotes';
+// const sideNav = document.getElementById('side-nav');
+// pages.forEach(p => {
+//     const a = document.createElement('a');
+//     a.className = 'nav-btn' + (p.id === current ? ' active' : '');
+//     a.href = p.href;
+//     a.textContent = p.label;
+//     sideNav.appendChild(a);
+// });
 /*
     =========================
     Editable content section

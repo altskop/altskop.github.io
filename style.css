@@ -76,6 +76,19 @@ a {
     color: var(--black);
 }
 
+.nav-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform .25s;
+    transform: translateX(5px) translateY(3px);
+    /* display: flex; */
+}
+
+.twitch-nav-link {
+    background: #762eb9;
+    color: #ffffff;
+}
+
 /* --- Mobile friendliness (≤ 640 px) --- */
 @media (max-width: 640px) {
     #side-nav {
@@ -96,6 +109,10 @@ a {
         font-size: .9rem;
         padding: .55rem .9rem;
         border-radius: 8px;
+    }
+
+    .nav-icon {
+        display: none;
     }
 }
 
