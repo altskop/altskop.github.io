@@ -5,6 +5,7 @@
 
 /* ------------- Art data -------------- */
 const artworks = [
+    { 'src': 'art/luniDance.mp4', 'note': 'LuniTooony dance', 'video': true },
     { 'src': 'art/vac_bday2025.png', 'note': 'Vacu0usly (2025)' },
     { 'src': 'art/MAIN_COMP_6_1.gif', 'note': 'Vacu0usly kidnaps you (2024)' },
     { 'src': 'art/vacBday2024.mp4', 'note': 'Vacu0usly (2024)', 'video': true },
@@ -14,6 +15,7 @@ const artworks = [
     { 'src': 'art/spritesheet.gif', 'note': 'Spelunky Spritesheet' },
     { 'src': 'art/sholzdance.mp4', 'note': 'Sholzi Pokemon-dance (2024)', 'video': true },
     { 'src': 'art/rem2023_final2.png', 'note': 'Rem (2023)' },
+    { 'src': 'art/luniProduction.mp4', 'note': 'LuniTooony dance timelapse', 'video': true },
     { 'src': 'art/vacbdayTimelapse_1.mp4', 'note': 'Timelapse process', 'video': true },
     { 'src': 'art/vac_bday2025_progress.mp4', 'note': 'Timelapse process', 'video': true },
     { 'src': 'art/watson&gura_final.jpg', 'note': 'Watson & Gura go skydiving (2021)' },
