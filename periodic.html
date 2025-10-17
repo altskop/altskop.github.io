@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 🌵 cactus 🌵</title>
+    <style>
+        body {
+            background: #2c2d32;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        input[type="number"] {
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <h1>go cactus go 🌵</h1>
+    
+    <div class="input-group">
+        <label for="soundFile">Choose Sound File:</label>
+        <input type="file" id="soundFile" accept="audio/*">
+    </div>
+    
+    <div class="input-group">
+        <label for="minInterval">Interval in seconds (min to max)</label>
+        <input type="number" id="minInterval" min="0.0" step="1" value="5">
+        <input type="number" id="maxInterval" min="0.1" step="1" value="10">
+    </div>
+    
+    <div class="controls">
+        <button id="playButton">Start</button>
+        <button id="stopButton">Stop</button>
+    </div>
+    
+    <p id="status">Upload a sound file and set intervals to begin.</p>
+    
+    <script>
+        let audioContext;
+        let audioBuffer;
+        let isPlaying = false;
+        let timeoutId;
+        
+        const soundFileInput = document.getElementById('soundFile');
+        const minIntervalInput = document.getElementById('minInterval');
+        const maxIntervalInput = document.getElementById('maxInterval');
+        const playButton = document.getElementById('playButton');
+        const stopButton = document.getElementById('stopButton');
+        const statusElement = document.getElementById('status');
+        
+        soundFileInput.addEventListener('change', async (event) => {
+            if (event.target.files.length === 0) return;
+            
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            
+            const file = event.target.files[0];
+            
+            try {
+                statusElement.textContent = 'Loading sound file...';
+                
+                const arrayBuffer = await file.arrayBuffer();
+                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                
+                statusElement.textContent = 'Sound file loaded and ready to play.';
+            } catch (error) {
+                statusElement.textContent = `Error loading sound file: ${error.message}`;
+                console.error('Error loading sound file:', error);
+            }
+        });
+        
+        function playSound() {
+            if (!audioContext || !audioBuffer) return;
+            
+            const source = audioContext.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(audioContext.destination);
+            source.start();
+            
+            statusElement.textContent = 'Playing sound...';
+        }
+        
+        // Schedule next sound
+        function scheduleNextSound() {
+            if (!isPlaying) return;
+            
+            const minTime = parseFloat(minIntervalInput.value) || 1;
+            const maxTime = parseFloat(maxIntervalInput.value) || 10;
+            
+            // Ensure min is not greater than max
+            const min = Math.min(minTime, maxTime);
+            const max = Math.max(minTime, maxTime);
+            
+            // Calculate random delay within range
+            const delay = min + Math.random() * (max - min);
+            
+            statusElement.textContent = `Next sound will play in ${delay.toFixed(1)} seconds`;
+            
+            timeoutId = setTimeout(() => {
+                playSound();
+                scheduleNextSound();
+            }, delay * 1000);
+        }
+        
+        playButton.addEventListener('click', () => {
+            if (!audioBuffer) {
+                statusElement.textContent = 'Please upload a sound file first.';
+                return;
+            }
+            
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            if (!isPlaying) {
+                isPlaying = true;
+                // playSound(); // Play sound immediately
+                scheduleNextSound();
+            }
+        });
+        
+        stopButton.addEventListener('click', () => {
+            if (isPlaying) {
+                isPlaying = false;
+                clearTimeout(timeoutId);
+                statusElement.textContent = 'Playback stopped.';
+            }
+        });
+    </script>
+</body>
+</html>
