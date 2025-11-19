@@ -1,0 +1,400 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #121212;
+    color: white;
+}
+
+a {
+    color: #1e90ff;
+}
+
+.container {
+    background: #2c2d32;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 30px;
+}
+
+h1 {
+    color: #c4c5c9;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #c4c5c9;
+    margin-bottom: 30px;
+}
+
+.api-form {
+    background: #323339;
+    padding: 25px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    border-left: 4px solid #ffc528;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: white;
+}
+
+input[type="text"], input[type="password"], select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e8ed;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.endpoint-info {
+    background: #393a41;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 15px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    overflow-x: auto;
+}
+
+.method-get {
+    background: #27ae60;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+button {
+    background: #5865f2;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.3s;
+    margin-right: 10px;
+}
+
+button:hover {
+    background: rgb(30, 148, 226);
+}
+
+button:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+}
+
+.loading {
+    display: none;
+    color: #3498db;
+    font-style: italic;
+}
+
+.error {
+    background: #e74c3c;
+    color: white;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 15px 0;
+    display: none;
+}
+
+.success {
+    background: #27ae60;
+    color: white;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 15px 0;
+    display: none;
+}
+
+.response-container {
+    margin-top: 30px;
+}
+
+.response-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.response-table th,
+.response-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.response-table th {
+    background: #34495e;
+    color: white;
+    font-weight: 600;
+}
+
+.response-table tr:hover {
+    background: #f5f5f5;
+}
+
+.json-display {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ecf0f1;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 12px 24px;
+    background: #ecf0f1;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px 4px 0 0;
+}
+
+.tab.active {
+    background: #3498db;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.info-box {
+    background: #e8f4f8;
+    border: 1px solid #bee5eb;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.info-box h3 {
+    margin-top: 0;
+    color: white;
+}
+
+/* User Scores Editing Styles */
+.scores-container {
+    margin-top: 30px;
+}
+
+.scores-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.scores-header h2 {
+    margin: 0;
+    color: white;
+}
+
+.scores-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: #27ae60;
+}
+
+.btn-primary:hover {
+    background: #219a52;
+}
+
+.btn-secondary {
+    background: #393a41;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+.scores-table-container {
+    background: #393a41;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.scores-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.scores-table th {
+    background: #323339;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.scores-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #3c3d41;
+}
+
+.scores-table tr {
+    background: #393a41;
+}
+
+.scores-table tr:hover {
+    background: #3b3c43;
+}
+
+.scores-table tr:last-child td {
+    border-bottom: none;
+}
+
+.score-input {
+    width: 80px;
+    padding: 6px 10px;
+    border: 2px solid #e1e8ed;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+.score-input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.score-input.changed {
+    border-color: #f39c12;
+    background-color: #fef9e7;
+}
+
+.username-cell {
+    font-weight: 600;
+    color: white;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+
+.changes-info {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.changes-info p {
+    margin: 0;
+    font-weight: 500;
+}
+
+.save-loading {
+    text-align: center;
+    color: #27ae60;
+    font-style: italic;
+    margin-top: 15px;
+}
+
+.new-user-row {
+    background: #393a41;
+}
+
+.new-user-row .username-input {
+    width: 120px;
+    padding: 6px 10px;
+    border: 2px solid #27ae60;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.new-user-row .username-input:focus {
+    outline: none;
+    border-color: #219a52;
+}
+
+@media (max-width: 768px) {
+    .scores-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .scores-actions {
+        justify-content: center;
+    }
+    
+    .scores-table {
+        font-size: 14px;
+    }
+    
+    .scores-table th,
+    .scores-table td {
+        padding: 10px 8px;
+    }
+    
+    .score-input {
+        width: 60px;
+    }
+}

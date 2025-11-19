@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamElements KVStore API Explorer</title>
+    <link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Checkins UI</h1>
+        <p class="subtitle">for Cactus 🌵</p>
+        
+        <div class="api-form">
+            <h2>Connection Settings</h2>
+            <p class="info-text">Get this info from <a href="https://streamelements.com/dashboard/account/channels">StreamElements Dashboard</a>. Never share your Overlay Token with anyone.</p>
+            
+            <div class="form-group">
+                <label for="channelId">Channel ID *</label>
+                <input type="text" id="channelId" placeholder="Enter your channel ID" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="apiKey">Overlay Token *</label>
+                <input type="password" id="apiKey" placeholder="Enter your Overlay token" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="endpoint">Data Key</label>
+                <select id="endpoint">
+                    <option value="customWidget.daily-checkins">customWidget.daily-checkins</option>
+                </select>
+            </div>
+            
+            <div class="endpoint-info">
+                <span class="method-get">GET</span>
+                <span id="fullUrl">https://kvstore.streamelements.com/v2/channel/{CHANNEL_ID}/{ENDPOINT}</span>
+            </div>
+            
+            <button onclick="loadUserScores()" id="loadBtn">Load Data</button>
+            <button onclick="clearData()" id="clearBtn">Clear Data</button>
+            <span class="loading" id="loading">Loading...</span>
+        </div>
+        
+        <div class="error" id="errorMessage"></div>
+        <div class="success" id="successMessage"></div>
+        
+        <div class="scores-container" id="scoresContainer" style="display: none;">
+            <div class="scores-header">
+                <h2>User Scores</h2>
+                <div class="scores-actions">
+                    <button onclick="addNewUser()" id="addUserBtn" class="btn-secondary">➕ Add User</button>
+                    <button onclick="saveChanges()" id="saveBtn" class="btn-primary" style="display: none;">💾 Save Changes</button>
+                </div>
+            </div>
+            
+            <div class="scores-table-container">
+                <table class="scores-table" id="scoresTable">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Points</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scoresBody"></tbody>
+                </table>
+            </div>
+            
+            <div class="changes-info" id="changesInfo" style="display: none;">
+                <p>⚠️ You have unsaved changes. Click "Save Changes" to persist them to the server.</p>
+            </div>
+            
+            <div class="save-loading" id="saveLoading" style="display: none;">
+                <span>Saving changes...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="viewer.js"></script>
+</body>
+</html>
