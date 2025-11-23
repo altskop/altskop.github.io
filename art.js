@@ -5,6 +5,12 @@
 
 /* ------------- Art data -------------- */
 const artworks = [
+    { 'src': 'art/shoomimi/kawaii.mp4', 'note': 'Shoomimi Kawaii-Kawaii (2025)', 'video': true },
+    { 'src': 'art/shoomimi/mimi_1.mp4', 'note': 'Mi-mi, mi-mi, oo-ee-oo (2025)', 'video': true },
+    { 'src': 'art/shoomimi/swipe.mp4', 'note': 'Swipe Shoominions (2025)', 'video': true },
+    { 'src': 'art/shoomimi/advicecollab.mp4', 'note': 'Advice Collab (2025)', 'video': true },
+    { 'src': 'art/shoomimi/hollowknight.mp4', 'note': 'Shoomimi Hollow Knight (2025)', 'video': true },
+
     { 'src': 'art/luniDance.mp4', 'note': 'LuniTooony dance', 'video': true },
     { 'src': 'art/vac_bday2025.png', 'note': 'Vacu0usly (2025)' },
     { 'src': 'art/MAIN_COMP_6_1.gif', 'note': 'Vacu0usly kidnaps you (2024)' },
