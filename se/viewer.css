@@ -260,6 +260,22 @@ button:disabled {
     background: #7f8c8d;
 }
 
+.btn-warning {
+    background: #f39c12;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-warning:hover {
+    background: #e67e22;
+}
+
 .scores-table-container {
     background: #393a41;
     border-radius: 6px;

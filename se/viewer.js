@@ -195,10 +195,60 @@ function deleteUser(username) {
 
 // Add a new user
 function addNewUser() {
-    const newUsername = `new_user`;
+    const newUsername = `user_${Date.now()}`;
     currentUserScores[newUsername] = 0;
     createUserRow(newUsername, 0, true);
     checkForChanges();
+}
+
+// Merge usernames that differ only in capitalization
+function mergeCapitalization() {
+    // Group usernames by lowercase version
+    const groups = {};
+    
+    for (const username in currentUserScores) {
+        const lower = username.toLowerCase();
+        if (!groups[lower]) {
+            groups[lower] = [];
+        }
+        groups[lower].push(username);
+    }
+    
+    // Find groups with multiple capitalizations
+    let mergeCount = 0;
+    let totalMerged = 0;
+    
+    for (const lower in groups) {
+        if (groups[lower].length > 1) {
+            // Use lowercase version as canonical name
+            const canonical = lower;
+            let totalScore = 0;
+            
+            // Sum all scores
+            groups[lower].forEach(username => {
+                totalScore += currentUserScores[username];
+            });
+            
+            // Remove all variants
+            groups[lower].forEach(username => {
+                delete currentUserScores[username];
+            });
+            
+            // Add back the lowercase name with summed score
+            currentUserScores[canonical] = totalScore;
+            
+            mergeCount++;
+            totalMerged += groups[lower].length;
+        }
+    }
+    
+    if (mergeCount > 0) {
+        showSuccess(`Merged ${mergeCount} group(s) affecting ${totalMerged} username(s)`);
+        displayUserScores();
+        checkForChanges();
+    } else {
+        showSuccess('No capitalization differences found to merge');
+    }
 }
 
 // Check if there are changes and update UI accordingly
