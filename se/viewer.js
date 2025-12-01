@@ -214,41 +214,43 @@ function mergeCapitalization() {
         groups[lower].push(username);
     }
     
-    // Find groups with multiple capitalizations
+    // Convert all usernames to lowercase and merge duplicates
     let mergeCount = 0;
     let totalMerged = 0;
+    let totalConverted = 0;
     
     for (const lower in groups) {
+        // Use lowercase version as canonical name
+        const canonical = lower;
+        let totalScore = 0;
+        
+        // Sum all scores
+        groups[lower].forEach(username => {
+            totalScore += currentUserScores[username];
+        });
+        
+        // Remove all variants
+        groups[lower].forEach(username => {
+            delete currentUserScores[username];
+        });
+        
+        // Add back the lowercase name with summed score
+        currentUserScores[canonical] = totalScore;
+        
+        totalConverted++;
         if (groups[lower].length > 1) {
-            // Use lowercase version as canonical name
-            const canonical = lower;
-            let totalScore = 0;
-            
-            // Sum all scores
-            groups[lower].forEach(username => {
-                totalScore += currentUserScores[username];
-            });
-            
-            // Remove all variants
-            groups[lower].forEach(username => {
-                delete currentUserScores[username];
-            });
-            
-            // Add back the lowercase name with summed score
-            currentUserScores[canonical] = totalScore;
-            
             mergeCount++;
             totalMerged += groups[lower].length;
         }
     }
     
     if (mergeCount > 0) {
-        showSuccess(`Merged ${mergeCount} group(s) affecting ${totalMerged} username(s)`);
-        displayUserScores();
-        checkForChanges();
+        showSuccess(`Converted ${totalConverted} username(s) to lowercase and merged ${mergeCount} duplicate group(s)`);
     } else {
-        showSuccess('No capitalization differences found to merge');
+        showSuccess(`Converted ${totalConverted} username(s) to lowercase`);
     }
+    displayUserScores();
+    checkForChanges();
 }
 
 // Check if there are changes and update UI accordingly
