@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silksong Loadout Randomizer</title>
+    <link rel="stylesheet" href="randomizer.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cactus's Loadout Randomizer</h1>
+        <div class="hornet-dialogue">
+            <img src="tools/250px-SS_Hornet_Dialogue_Top.png" alt="Hornet">
+        </div>
+        
+        <!-- Randomize Button -->
+        <div class="randomize-section">
+            <button id="randomizeBtn" onclick="randomize()">RANDOMIZE</button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="result-crest">
+                <h3>Crest</h3>
+                <div id="resultCrest"></div>
+            </div>
+            
+            <div class="result-tools">
+                <div class="result-column">
+                    <div class="heading-image"><img src="tools/Red_Tools_Heading.png" alt="Red Tools"></div>
+                    <div id="resultRed" class="result-list"></div>
+                </div>
+                <div class="result-column">
+                    <div class="heading-image"><img src="tools/Blue_Tools_Heading.png" alt="Blue Tools"></div>
+                    <div id="resultBlue" class="result-list"></div>
+                </div>
+                <div class="result-column">
+                    <div class="heading-image"><img src="tools/Yellow_Tools_Heading.png" alt="Yellow Tools"></div>
+                    <div id="resultYellow" class="result-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crests Section -->
+        <div class="selection-section">
+            <h2>Crests 
+                <button class="toggle-btn" onclick="toggleAll('crest')">Select/Deselect All</button>
+            </h2>
+            <div id="crestGrid" class="item-grid"></div>
+        </div>
+
+        <!-- Red Tools Section -->
+        <div class="selection-section">
+            <div class="section-header">
+                <img src="tools/Red_Tools_Heading.png" alt="Red Tools">
+                <button class="toggle-btn" onclick="toggleAll('red')">Select/Deselect All</button>
+            </div>
+            <div id="redGrid" class="item-grid"></div>
+        </div>
+
+        <!-- Blue Tools Section -->
+        <div class="selection-section">
+            <div class="section-header">
+                <img src="tools/Blue_Tools_Heading.png" alt="Blue Tools">
+                <button class="toggle-btn" onclick="toggleAll('blue')">Select/Deselect All</button>
+            </div>
+            <div id="blueGrid" class="item-grid"></div>
+        </div>
+
+        <!-- Yellow Tools Section -->
+        <div class="selection-section">
+            <div class="section-header">
+                <img src="tools/Yellow_Tools_Heading.png" alt="Yellow Tools">
+                <button class="toggle-btn" onclick="toggleAll('yellow')">Select/Deselect All</button>
+            </div>
+            <div id="yellowGrid" class="item-grid"></div>
+        </div>
+    </div>
+
+    <script src="randomizer.js"></script>
+</body>
+</html>
