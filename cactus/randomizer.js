@@ -107,6 +107,15 @@ function init() {
 }
 
 function loadPreferences() {
+    const vesticrestCheckbox = document.getElementById('vesticrestCheckbox');
+    const vesticrestSaved = getCookie('vesticrest');
+    if (vesticrestSaved === 'true') {
+        vesticrestCheckbox.checked = true;
+    }
+    
+    vesticrestCheckbox.addEventListener('change', () => {
+        setCookie('vesticrest', vesticrestCheckbox.checked);
+    });
 }
 
 function getEnabledItemsFromUI(category) {
@@ -271,9 +280,11 @@ function randomize() {
     
     // Randomize crest first (it determines slot counts)
     const selectedCrest = enabledCrests[Math.floor(Math.random() * enabledCrests.length)];
+    const vesticrestEnabled = document.getElementById('vesticrestCheckbox').checked;
+    
     const redSlots = selectedCrest.red;
-    const blueSlots = selectedCrest.blue;
-    const yellowSlots = selectedCrest.yellow;
+    const blueSlots = selectedCrest.blue + (vesticrestEnabled ? 1 : 0);
+    const yellowSlots = selectedCrest.yellow + (vesticrestEnabled ? 1 : 0);
     
     // Use whatever tools are available, up to the slot count
     const actualRedSlots = Math.min(redSlots, enabledRed.length);
