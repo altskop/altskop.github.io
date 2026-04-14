@@ -33,6 +33,10 @@
             
             <div class="result-tools">
                 <div class="result-column">
+                    <div class="heading-image"><img src="skills/Silk_Skills_Heading.png" alt="Skills"></div>
+                    <div id="resultSkills" class="result-list"></div>
+                </div>
+                <div class="result-column">
                     <div class="heading-image"><img src="tools/Red_Tools_Heading.png" alt="Red Tools"></div>
                     <div id="resultRed" class="result-list"></div>
                 </div>
@@ -53,6 +57,15 @@
                 <button class="toggle-btn" onclick="toggleAll('crest')">Select/Deselect All</button>
             </h2>
             <div id="crestGrid" class="item-grid"></div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="selection-section">
+            <div class="section-header">
+                <img src="skills/Silk_Skills_Heading.png" alt="Skills">
+                <button class="toggle-btn" onclick="toggleAll('skills')">Select/Deselect All</button>
+            </div>
+            <div id="skillsGrid" class="item-grid"></div>
         </div>
 
         <!-- Red Tools Section -->

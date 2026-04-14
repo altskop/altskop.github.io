@@ -1,13 +1,13 @@
 const gameData = {
     crest: [
-        { name: 'Architect', image: 'crests/architect.png', red: 3, blue: 2, yellow: 2 },
-        { name: 'Beast', image: 'crests/beast.png', red: 2, blue: 2, yellow: 0 },
-        { name: 'Cursed', image: 'crests/cursed.png', red: 0, blue: 0, yellow: 0 },
-        { name: 'Hunter', image: 'crests/hunter.png', red: 2, blue: 2, yellow: 2 },
-        { name: 'Reaper', image: 'crests/reaper.png', red: 2, blue: 2, yellow: 2 },
-        { name: 'Shaman', image: 'crests/shaman.png', red: 0, blue: 2, yellow: 0 },
-        { name: 'Wanderer', image: 'crests/wanderer.png', red: 1, blue: 2, yellow: 3 },
-        { name: 'Witch', image: 'crests/witch.png', red: 2, blue: 3, yellow: 0 }
+        { name: 'Architect', image: 'crests/architect.png', skills: 0, red: 3, blue: 2, yellow: 2 },
+        { name: 'Beast', image: 'crests/beast.png', skills: 1, red: 2, blue: 0, yellow: 2 },
+        { name: 'Cursed', image: 'crests/cursed.png', skills: 0, red: 0, blue: 0, yellow: 0 },
+        { name: 'Hunter', image: 'crests/hunter.png', skills: 1, red: 2, blue: 2, yellow: 2 },
+        { name: 'Reaper', image: 'crests/reaper.png', skills: 1, red: 2, blue: 2, yellow: 2 },
+        { name: 'Shaman', image: 'crests/shaman.png', skills: 3, red: 0, blue: 2, yellow: 0 },
+        { name: 'Wanderer', image: 'crests/wanderer.png', skills: 1, red: 1, blue: 2, yellow: 3 },
+        { name: 'Witch', image: 'crests/witch.png', skills: 1, red: 2, blue: 3, yellow: 0 }
     ],
     red: [
         { name: "Flea Brew", image: "tools/red/59px-Flea_Brew.png" },
@@ -74,6 +74,14 @@ const gameData = {
         { name: "Shell Satchel", image: "tools/yellow/72px-Shell_Satchel.png", excludeGroup: "dead_bug_purse" },
         { name: "Thief's Mark", image: "tools/yellow/72px-Thief's_Mark.png" },
         { name: "Weighted Belt", image: "tools/yellow/72px-Weighted_Belt.png" }
+    ],
+    skills: [
+        { name: "Pale Nails", image: "skills/65px-Pale_Nails.png" },
+        { name: "Cross Stitch", image: "skills/72px-Cross_Stitch.png" },
+        { name: "Rune Rage", image: "skills/72px-Rune_Rage.png" },
+        { name: "Sharpdart", image: "skills/72px-Sharpdart.png" },
+        { name: "Silkspear", image: "skills/72px-Silkspear.png" },
+        { name: "Thread Storm", image: "skills/72px-Thread_Storm.png" }
     ]
 };
 
@@ -150,6 +158,7 @@ function createItemGrids() {
     createGrid('red', 'redGrid', gameData.red);
     createGrid('blue', 'blueGrid', gameData.blue);
     createGrid('yellow', 'yellowGrid', gameData.yellow);
+    createGrid('skills', 'skillsGrid', gameData.skills);
 }
 
 function createGrid(category, gridId, items) {
@@ -186,6 +195,7 @@ function createGrid(category, gridId, items) {
             const slotInfo = document.createElement('div');
             slotInfo.className = 'slot-info';
             slotInfo.innerHTML = `
+                <span class="slot-count">${item.skills}<img src="tools/20px-Skill_Icon.png" alt="Skills"></span>
                 <span class="slot-count">${item.red}<img src="tools/20px-Red_Tools_Icon.png" alt="Red"></span>
                 <span class="slot-count">${item.blue}<img src="tools/20px-Blue_Tools_Icon.png" alt="Blue"></span>
                 <span class="slot-count">${item.yellow}<img src="tools/20px-Yellow_Tools_Icon.png" alt="Yellow"></span>
@@ -272,6 +282,7 @@ function randomize() {
     const enabledRed = getEnabledItemsFromUI('red');
     const enabledBlue = getEnabledItemsFromUI('blue');
     const enabledYellow = getEnabledItemsFromUI('yellow');
+    const enabledSkills = getEnabledItemsFromUI('skills');
     
     if (enabledCrests.length === 0) {
         alert('Please enable at least one crest!');
@@ -282,20 +293,23 @@ function randomize() {
     const selectedCrest = enabledCrests[Math.floor(Math.random() * enabledCrests.length)];
     const vesticrestEnabled = document.getElementById('vesticrestCheckbox').checked;
     
+    const skillSlots = selectedCrest.skills;
     const redSlots = selectedCrest.red;
     const blueSlots = selectedCrest.blue + (vesticrestEnabled ? 1 : 0);
     const yellowSlots = selectedCrest.yellow + (vesticrestEnabled ? 1 : 0);
     
     // Use whatever tools are available, up to the slot count
+    const actualSkillSlots = Math.min(skillSlots, enabledSkills.length);
     const actualRedSlots = Math.min(redSlots, enabledRed.length);
     const actualBlueSlots = Math.min(blueSlots, enabledBlue.length);
     const actualYellowSlots = Math.min(yellowSlots, enabledYellow.length);
     
+    const selectedSkills = getRandomItems(enabledSkills, actualSkillSlots);
     const selectedRed = getRandomItems(enabledRed, actualRedSlots);
     const selectedBlue = getRandomItems(enabledBlue, actualBlueSlots);
     const selectedYellow = getRandomItems(enabledYellow, actualYellowSlots);
     
-    displayResults(selectedCrest, selectedRed, selectedBlue, selectedYellow);
+    displayResults(selectedCrest, selectedSkills, selectedRed, selectedBlue, selectedYellow);
 }
 
 function getRandomItems(array, count) {
@@ -319,7 +333,7 @@ function getRandomItems(array, count) {
     return selected;
 }
 
-function displayResults(crest, redTools, blueTools, yellowTools) {
+function displayResults(crest, skills, redTools, blueTools, yellowTools) {
     const resultsSection = document.getElementById('resultsSection');
     resultsSection.style.display = 'block';
     
@@ -328,12 +342,14 @@ function displayResults(crest, redTools, blueTools, yellowTools) {
         <img src="${crest.image}" alt="${crest.name}">
         <div class="crest-name">${crest.name}</div>
         <div class="crest-slots">
+            <span class="slot-count">${crest.skills} <img src="tools/20px-Skill_Icon.png" alt="Skills"></span>
             <span class="slot-count">${crest.red} <img src="tools/20px-Red_Tools_Icon.png" alt="Red"></span>
             <span class="slot-count">${crest.blue} <img src="tools/20px-Blue_Tools_Icon.png" alt="Blue"></span>
             <span class="slot-count">${crest.yellow} <img src="tools/20px-Yellow_Tools_Icon.png" alt="Yellow"></span>
         </div>
     `;
     
+    displayToolList('resultSkills', skills);
     displayToolList('resultRed', redTools);
     displayToolList('resultBlue', blueTools);
     displayToolList('resultYellow', yellowTools);
