@@ -5,6 +5,7 @@
 
 /* ------------- Art data -------------- */
 const artworks = [
+    { 'src': 'art/final7.png', 'note': 'Vacu0usly (2026)' },
     { 'src': 'art/shoomimi/kawaii.mp4', 'note': 'Shoomimi Kawaii-Kawaii (2025)', 'video': true },
     { 'src': 'art/shoomimi/mimi_1.mp4', 'note': 'Mi-mi, mi-mi, oo-ee-oo (2025)', 'video': true },
     { 'src': 'art/shoomimi/swipe.mp4', 'note': 'Swipe Shoominions (2025)', 'video': true },
